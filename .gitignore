@@ -38,3 +38,16 @@ captures/
 
 # Keystore files
 *.jks
+.idea/libraries/animated_base_0_12_0.xml
+.idea/libraries/animated_gif_0_12_0.xml
+.idea/libraries/appcompat_v7_23_0_1.xml
+.idea/libraries/bolts_tasks_1_4_0.xml
+.idea/libraries/design_23_0_1.xml
+.idea/libraries/drawee_0_12_0.xml
+.idea/libraries/fbcore_0_12_0.xml
+.idea/libraries/fresco_0_12_0.xml
+.idea/libraries/gson_2_4.xml
+.idea/libraries/imagepipeline_0_12_0.xml
+.idea/libraries/imagepipeline_base_0_12_0.xml
+.idea/libraries/support_annotations_23_2_1.xml
+.idea/libraries/support_v4_23_2_1.xml
