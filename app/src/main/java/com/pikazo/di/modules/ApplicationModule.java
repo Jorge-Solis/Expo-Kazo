@@ -3,7 +3,12 @@ package com.pikazo.di.modules;
 import android.app.Application;
 import android.content.Context;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
+import com.amazonaws.regions.Regions;
+import com.pikazo.global.AppConstants;
 import com.pikazo.global.SharedData;
+import com.pikazo.rest.aws.LambdaProxy;
 
 import javax.inject.Singleton;
 
@@ -34,4 +39,24 @@ public class ApplicationModule {
         return new SharedData();
     }
 
+    @Provides
+    @Singleton
+    public LambdaProxy provideLambdaProxy(LambdaInvokerFactory factory) {
+        return factory.build(LambdaProxy.class);
+    }
+
+    @Provides
+    @Singleton
+    public LambdaInvokerFactory provideLambdaInvokerFactory(
+            CognitoCachingCredentialsProvider credentialsProvider) {
+        return new LambdaInvokerFactory(application, Regions.US_EAST_1, credentialsProvider);
+    }
+
+
+    @Provides
+    @Singleton
+    public CognitoCachingCredentialsProvider provideCognitoCachingCredentialsProvider() {
+        return new CognitoCachingCredentialsProvider(application, AppConstants.IDENTITY_POOL_ID,
+                Regions.US_EAST_1);
+    }
 }

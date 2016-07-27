@@ -5,4 +5,5 @@ package com.pikazo.presenter.main;
  */
 public interface IMainPresenter {
 
+    void testLambda();
 }

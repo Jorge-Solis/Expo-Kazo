@@ -9,6 +9,7 @@
     tools:context=".view.activities.main.MainActivity"
     android:background="@drawable/portfolio_background">
 
+
     <!-- Top Bar -->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,5 +39,10 @@
         android:id="@+id/relativeLayout2">
 
     </RelativeLayout>
+    <Button android:id="@+id/btnTestLambda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="TEST LAMBDA!"/>
 
 </RelativeLayout>
