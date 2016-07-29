@@ -16,8 +16,8 @@
         android:layout_height="45dp"
         android:layout_marginLeft="8dp"
         android:layout_alignParentTop="true"
-        android:id="@+id/relativeLayout">
-        <ImageView android:id="@+id/btnSelf"
+        android:id="@+id/topBar">
+        <ImageView android:id="@+id/btnGoBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -25,24 +25,32 @@
             android:src="@drawable/self"/>
     </RelativeLayout>
     <!-- Art Gallery Grid -->
-    <GridView
+    <GridView android:id="@+id/gridImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_above="@+id/relativeLayout2"/>
+        android:layout_below="@+id/topBar"
+        android:layout_above="@+id/paintLayout"
+        android:numColumns="auto_fit"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:gravity="center"
+        android:stretchMode="columnWidth"/>
     <!-- Bottom Palette -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
+        android:padding="16dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/drawboard_wood_crop2"
-        android:id="@+id/relativeLayout2">
-
+        android:id="@+id/paintLayout">
+        <ImageView android:id="@+id/btnOpenPaintView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/portfolio_paperold"/>
     </RelativeLayout>
-    <Button android:id="@+id/btnTestLambda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="TEST LAMBDA!"/>
 
 </RelativeLayout>

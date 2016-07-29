@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".view.activities.main.MainActivity"
+    android:background="@drawable/portfolio_background">
+
+
+    <!-- Top Bar -->
+    <RelativeLayout android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentTop="true">
+        <ImageView android:id="@+id/btnGoBack"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/dismiss_sketch"/>
+    </RelativeLayout>
+    <!-- Actions Bar -->
+    <RelativeLayout android:id="@+id/actionsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar">
+        <!-- Subject and Style Boxes -->
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            style="?attr/buttonBarStyle">
+            <!-- Subject -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <com.pikazo.custom.CustomTextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/subject"
+                    android:textSize="@dimen/text_size_small"
+                    app:fontName="@string/font_bold"/>
+                <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imgSubject"
+                    android:layout_width="120dp"
+                    android:layout_height="140dp"
+                    android:layout_gravity="center_horizontal"
+                    app:overlayImage="@drawable/left_dark"
+                    app:backgroundImage="@drawable/mona_lisa_sketch"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Paint Animation -->
+        <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imgPaint"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+    <LinearLayout android:id="@+id/imageSourceActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/actionsLayout"
+        android:orientation="vertical">
+        <com.pikazo.custom.CustomTextView android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:text="camera roll"
+            android:textSize="@dimen/text_size_small"
+            app:fontName="@string/font_regular"/>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:src="@drawable/big_box_line"/>
+    </LinearLayout>
+    <!-- Art Gallery Grid -->
+    <GridView android:id="@+id/gridImages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageSourceActions"
+        android:layout_above="@+id/paintLayout"
+        android:numColumns="auto_fit"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="5dp"
+        android:gravity="center"
+        android:stretchMode="columnWidth" />
+
+</RelativeLayout>

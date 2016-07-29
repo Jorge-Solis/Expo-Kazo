@@ -1,38 +1,48 @@
 package com.pikazo.view.activities.main;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridView;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.pikazo.PikazoApplication;
 import com.pikazo.R;
+import com.pikazo.adapters.GenericAdapter;
 import com.pikazo.di.components.DaggerMainComponent;
 import com.pikazo.di.modules.MainModule;
+import com.pikazo.global.AppConstants;
 import com.pikazo.presenter.main.IMainPresenter;
-import com.pikazo.rest.aws.LambdaProxy;
+import com.pikazo.rest.dto.Job;
+import com.pikazo.utils.ImageUtils;
 import com.pikazo.view.activities.BaseActivity;
+import com.pikazo.view.activities.Paint.PaintActivity;
+import com.pikazo.viewholders.DeviceImageViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements IMainView {
 
     @Inject IMainPresenter mainPresenter;
-    private CognitoCachingCredentialsProvider credentialsProvider;
-    private AmazonS3 s3;
-    private LambdaInvokerFactory factory;
-    private TransferUtility transferUtility;
-    private LambdaProxy lambdaProxy;
-
+    @Bind(R.id.gridImages) GridView gridImages;
+    private GenericAdapter adapter;
+    private Timer queueTimer;
+    private TimerTask queueTimerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,30 +51,14 @@ public class MainActivity extends BaseActivity implements IMainView {
         setActivityGraph();
         ButterKnife.bind(this);
         configureViews();
-        // Cognito Credentials Provider
-        credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),    /* get the context for the application */
-                "us-east-1:7fe69aa6-888d-4514-88d5-dc28e5031699",    /* Identity Pool ID */
-                Regions.US_EAST_1        /* Region for your identity pool--US_EAST_1 or EU_WEST_1*/
-        );
-        // S3 configuration
-        s3 = new AmazonS3Client(credentialsProvider);
-        transferUtility = new TransferUtility(s3, getApplicationContext());
-        // Lambda configuration
-        factory = new LambdaInvokerFactory(
-                getApplicationContext(),
-                Regions.US_EAST_1,
-                credentialsProvider);
-        // Create the Lambda proxy object with default Json data binder.
-        // You can provide your own data binder by implementing
-        // LambdaDataBinder
-        lambdaProxy = factory.build(LambdaProxy.class);
-
     }
 
-    @OnClick(R.id.btnTestLambda)
-    public void testLambda(View view) {
-        mainPresenter.testLambda();
+    @OnClick(R.id.btnOpenPaintView)
+    public void loadImagesAndOpenPaintView(View view) {
+        ArrayList<String> images =  ImageUtils.getImagesPath(this);
+        sharedData.setDeviceImages(images);
+        Intent paintIntent = new Intent(this, PaintActivity.class);
+        startActivity(paintIntent);
     }
 
     @Override
@@ -93,5 +87,97 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void configureViews() {
+        List<Job> jobsToShow = new ArrayList<>();
+        for (Job job : sharedData.getUserQueueJobs()) {
+            if (job.getState() == 3) {
+                jobsToShow.add(job);
+            } else {
+                // TODO: Add this job at the bottom as pending job
+            }
+        }
+        adapter = new GenericAdapter(this, jobsToShow, 1) {
+
+            @Override
+            public boolean onEnable(int position) {
+                return true;
+            }
+
+            @Override
+            public View onRenderingView(int position, View convertView, ViewGroup parent) {
+                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context
+                        .LAYOUT_INFLATER_SERVICE);
+                DeviceImageViewHolder holder;
+                if (convertView == null) {
+                    convertView = layoutInflater.inflate(R.layout.item_image, null);
+                    holder = new DeviceImageViewHolder();
+                    holder.image = (SimpleDraweeView) convertView.findViewById(R.id.imgSubject);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (DeviceImageViewHolder) convertView.getTag();
+                }
+                Job queueJob = sharedData.getUserQueueJobs().get(position);
+                Uri uri = Uri.parse(AppConstants.AWS_S3_BASE_URL + queueJob.getParameters()
+                        .getOutputId());
+                holder.image.setImageURI(uri);
+                return convertView;
+            }
+
+            @Override
+            public int onGetItemViewType(int position) {
+                return 0;
+            }
+        };
+        gridImages.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startQueueCheckTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelQueueCheckTimer();
+    }
+
+    /**
+     * Because the adapter data has a Realm change listener, changes are updated automatically
+     * so we just notify the adapter that data has changed to refresh and re-execute logic
+     */
+    @Override
+    public void updatePortfolio(){
+        List<Job> jobsToShow = new ArrayList<>();
+        for (Job job : sharedData.getUserQueueJobs()) {
+            if (job.getState() == 3) {
+                jobsToShow.add(job);
+            } else {
+                // TODO: Add this job at the bottom as pending job
+            }
+        }
+        adapter.setItems(jobsToShow);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Checks the queue of painting jobs each 30 seconds
+     */
+    private void startQueueCheckTimer() {
+        queueTimer = new Timer();
+        queueTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mainPresenter.checkQueue();
+            }
+        };
+        queueTimer.scheduleAtFixedRate(queueTimerTask, 100, 30000);
+    }
+
+    /**
+     * Cancels the timer execution
+     */
+    private void cancelQueueCheckTimer() {
+        queueTimer.cancel();
     }
 }

@@ -5,5 +5,9 @@ package com.pikazo.presenter.main;
  */
 public interface IMainPresenter {
 
-    void testLambda();
+    void checkQueue();
+
+    void loadImageInformation(String imageResultId);
+
+    void getStyles();
 }
