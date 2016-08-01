@@ -34,7 +34,7 @@ public class PikazoApplication extends Application {
         Set<RequestListener> requestListeners = new HashSet<>();
         requestListeners.add(new RequestLoggingListener());
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
-                // other setters
+                .setDownsampleEnabled(true)
                 .setRequestListeners(requestListeners)
                 .build();
         // Create a RealmConfiguration that saves the Realm file in the app's "files" directory.

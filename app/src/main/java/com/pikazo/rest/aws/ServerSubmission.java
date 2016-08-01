@@ -68,8 +68,8 @@ public class ServerSubmission {
      */
     public void summit(AsyncTask<JsonObject, Void, JsonObject> handler){
         // TODO: Remove these hardcoded values for fields
-        styleId = "0CF4CC87-B34A-4376-9FDF-DEF5315AEBCD";
-        styleProxyId = "ca2bf254-ecf3-46ee-bfe4-1209afb17a13";
+        styleId = "E883F669-B919-416D-9E93-0CA555E05C9D";
+        styleProxyId = "4f82e20b-4859-4a05-8a68-b1b9777e8f31";
         // Request Parameters
         final JsonObject parameters = new JsonObject();
         parameters.addProperty("contentid", contentId);

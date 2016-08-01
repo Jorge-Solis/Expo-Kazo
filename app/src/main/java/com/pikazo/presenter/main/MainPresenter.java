@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by jsolisl-as on 05/10/2015.
@@ -33,8 +34,9 @@ public class MainPresenter extends BasePresenter implements IMainPresenter{
         this.mainService = mainService;
         sharedData.getUserQueueJobs().addChangeListener(new RealmChangeListener<RealmResults<Job>>() {
             @Override
-            public void onChange(RealmResults<Job> element) {
+            public void onChange(RealmResults<Job> realmResults) {
                 // Notify the view
+                realmResults = realmResults.sort("time", Sort.ASCENDING);
                 showLocalQueueJobs();
             }
         });

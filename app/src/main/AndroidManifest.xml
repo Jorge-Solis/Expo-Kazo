@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:largeHeap="true">
-        <activity android:name="com.pikazo.view.activities.splash.SplashScreen">
+        <activity android:name="com.pikazo.view.activities.splash.SplashScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,10 +23,14 @@
             </intent-filter>
         </activity>
         <activity android:name="com.pikazo.view.activities.main.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name="com.pikazo.view.activities.Paint.PaintActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
 
         <service

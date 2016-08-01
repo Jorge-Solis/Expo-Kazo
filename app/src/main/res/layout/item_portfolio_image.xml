@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="18dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/plaque">
+        <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imgSubject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            fresco:progressBarImage="@mipmap/ic_launcher"
+            fresco:progressBarAutoRotateInterval="800"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="38dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/plaque"
+        android:orientation="vertical">
+        <com.pikazo.custom.CustomTextView android:id="@+id/txtImageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Untitle No.21"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/text_size_mini"
+            fresco:fontName="@string/font_regular"/>
+        <com.pikazo.custom.CustomTextView android:id="@+id/txtImageDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="July 29, 2016"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="8sp"
+            fresco:fontName="@string/font_regular"/>
+    </LinearLayout>
+
+</LinearLayout>

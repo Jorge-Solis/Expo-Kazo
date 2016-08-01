@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:background="@drawable/portfolio_paperold">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        fresco:placeholderImage="@drawable/portfolio_paperold"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/imgJob"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        fresco:progressBarImage="@mipmap/ic_launcher"
+        fresco:progressBarAutoRotateInterval="800"/>
+
+    <com.pikazo.custom.CustomTextView android:id="@+id/txtJobTime"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:background="@drawable/background_square"
+        android:textSize="@dimen/text_size_mini"
+        android:textColor="@color/colorWhite"
+        android:text="A minute ago test"
+        fresco:fontName="@string/font_regular"/>
+
+</RelativeLayout>

@@ -12,6 +12,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.pikazo.global.AppConstants;
 import com.pikazo.global.SharedData;
 import com.pikazo.rest.aws.LambdaProxy;
+import com.pikazo.rest.aws.ServerSubmission;
 
 import javax.inject.Singleton;
 
@@ -74,6 +75,14 @@ public class ApplicationModule {
     @Singleton
     public TransferUtility provideTransferUtility(AmazonS3 s3, Context context) {
         return new TransferUtility(s3, context);
+    }
+
+    @Provides
+    @Singleton
+    public ServerSubmission provideServerSubmission(TransferUtility transferUtility,
+                                                    LambdaProxy lambdaProxy,
+                                                    SharedData sharedData) {
+        return new ServerSubmission(transferUtility, lambdaProxy, sharedData);
     }
 
     @Provides

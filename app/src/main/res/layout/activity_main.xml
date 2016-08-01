@@ -28,13 +28,15 @@
     <GridView android:id="@+id/gridImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/topBar"
         android:layout_above="@+id/paintLayout"
-        android:numColumns="auto_fit"
-        android:columnWidth="90dp"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
+        android:columnWidth="130dp"
+        android:numColumns="2"
         android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"/>
     <!-- Bottom Palette -->
     <RelativeLayout
@@ -44,13 +46,24 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/drawboard_wood_crop2"
         android:id="@+id/paintLayout">
-        <ImageView android:id="@+id/btnOpenPaintView"
-            android:layout_width="80dp"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_alignParentBottom="true"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/portfolio_paperold"/>
+            android:layout_marginTop="8dp"
+            android:layout_alignParentBottom="true">
+            <LinearLayout android:id="@+id/jobsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView android:id="@+id/btnOpenPaintView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/portfolio_paperold"/>
+            </LinearLayout>
+        </HorizontalScrollView>
     </RelativeLayout>
 
 </RelativeLayout>

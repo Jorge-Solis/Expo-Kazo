@@ -89,10 +89,22 @@
         android:layout_below="@+id/imageSourceActions"
         android:layout_above="@+id/paintLayout"
         android:numColumns="auto_fit"
-        android:columnWidth="90dp"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="5dp"
+        android:columnWidth="70dp"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp"
         android:gravity="center"
         android:stretchMode="columnWidth" />
 
+    <!-- Loading Panel -->
+    <RelativeLayout android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLoadingBackground"
+        android:visibility="gone">
+        <ProgressBar android:id="@+id/prLoading"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 </RelativeLayout>

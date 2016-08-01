@@ -33,7 +33,7 @@ public class ImageUtils {
             PathOfImage = cursor.getString(column_index_data);
             listOfAllImages.add(PathOfImage);
             // TODO: Remove this when memory management is ready for image loading process
-            if (listOfAllImages.size() > 30) {
+            if (listOfAllImages.size() > 10) {
                 break;
             }
         }

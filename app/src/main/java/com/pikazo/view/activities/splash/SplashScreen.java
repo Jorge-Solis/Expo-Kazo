@@ -25,6 +25,7 @@ import javax.inject.Singleton;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class SplashScreen extends BaseActivity {
 
@@ -63,6 +64,7 @@ public class SplashScreen extends BaseActivity {
      */
     private void loadDataBase(){
         RealmResults<Job> localQueue = realm.where(Job.class).findAll();
+        localQueue = localQueue.sort("time", Sort.DESCENDING);
         sharedData.setUserQueueJobs(localQueue);
     }
 
@@ -93,7 +95,7 @@ public class SplashScreen extends BaseActivity {
                 finish();
             }
         };
-        timer.schedule(timerTask, 1500);
+        timer.schedule(timerTask, 2000);
     }
 
     @Override

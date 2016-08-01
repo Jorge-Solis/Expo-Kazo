@@ -5,6 +5,7 @@ package com.pikazo.view.activities.Paint;
  */
 public interface PaintView {
 
+    void blockPaintFeature(boolean block);
 
     void goBack();
 }
